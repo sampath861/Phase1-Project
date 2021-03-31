@@ -1,4 +1,2 @@
-varna
-varna
-samp
-samp
+sampath
+sampath

@@ -111,7 +111,7 @@ public class Authentication {
 	public static void lockerOptions(String inputUsername) {
 		System.out.println("1 . FETCH ALL STORED CREDENTIALS ");
 		System.out.println("2 . STORED CREDENTIALS ");
-	
+		System.out.println("Enter option :");
 		int option = scanner.nextInt();
 		switch(option) {
 			case 1 : 
