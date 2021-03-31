@@ -1,13 +1,15 @@
 package com.simplilearn.phase1_lockme.application;
 
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-import com.simplilearn.Phase1_lockme.model.UserCredentials_lockerdb;
-import com.simplilearn.Phase1_lockme.model.Users_db;
+import com.simplilearn.phase1_lockme.model.Users_db;
+import com.simplilearn.phase1_lockme.model.UserCredentials_lockerdb;
+
 
 public class Authentication {
 	static Scanner scanner;
