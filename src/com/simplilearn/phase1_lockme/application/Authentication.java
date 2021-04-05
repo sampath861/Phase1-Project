@@ -5,10 +5,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-import com.simplilearn.phase1_lockme.model.Users_db;
-import com.simplilearn.phase1_lockme.model.UserCredentials_lockerdb;
+import com.simplilearn.Phase1_lockme.model.*;
+
 
 
 public class Authentication {
@@ -22,7 +26,7 @@ public class Authentication {
 	static File dbFile;
 	static File lockerFile;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
 	startApplication();
 	welcomeScreen();
@@ -31,7 +35,7 @@ public class Authentication {
 	}
 
 	
-	public static void signInOptions() {
+	public static void signInOptions() throws IOException {
 		System.out.println("1 . Registration ");
 		System.out.println("2 . Login ");
 		 scanner=new Scanner(System.in);
@@ -81,7 +85,7 @@ public class Authentication {
 
 }
 	
-	public static void loginUser()  {
+	public static void loginUser() throws IOException  {
 
 		System.out.println("==========================================");
 		System.out.println("*   WELCOME TO LOGIN PAGE	 *");
@@ -108,7 +112,7 @@ public class Authentication {
 	}
 	
 	
-	public static void lockerOptions(String inputUsername) {
+	public static void lockerOptions(String inputUsername) throws IOException {
 		System.out.println("1 . FETCH ALL STORED CREDENTIALS ");
 		System.out.println("2 . STORED CREDENTIALS ");
 		System.out.println("Enter option :");
@@ -119,6 +123,9 @@ public class Authentication {
 				break;
 			case 2 :
 				storeCredentials(inputUsername);
+				break;
+			case 3 :
+				deleteCredentials(inputUsername);
 				break;
 			default :
 				System.out.println("Please select 1 Or 2");
@@ -177,6 +184,68 @@ public class Authentication {
 		
 	}
 	
+	private static void deleteCredentials(String inputUsername) throws IOException {
+		System.out.println("==========================================");
+		System.out.println("*   WELCOME TO DIGITAL LOCKER 	 *");
+		System.out.println("==========================================");
+		
+		String data = null;
+		try {
+			data = readFileAsString("lockerfile.txt");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	    String[] arraydata=data.split("\n");
+	    List<String> list=new ArrayList<String>();
+	    
+	    for(int i=0;i<arraydata.length;i++)
+	    {
+	    	list.add(arraydata[i]);
+	    }
+	    for(int i=0;i<=list.size();i++)
+	    {
+	    	if(list.size()==0)
+	    	{
+	    		System.out.println("empty file");
+	    	}
+	    	else
+	    	{
+	    	if( list.get(i).equals(inputUsername))
+	    	{
+	    		System.out.println("Following Site Name: "+list.remove(i)+"    removed");
+				System.out.println("Following User Name: "+list.remove(i+1)+"  removed");
+				System.out.println("Following User Password:  "+list.remove(i+2)+"  removed");
+				
+				FileWriter writer = null;
+				try {
+					writer=new FileWriter(lockerFile,false);
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				} 
+				for(String str: list) {
+					
+						writer.write(str);
+					
+					
+				}
+				writer.close();
+				
+				
+				
+				break;
+	    	}
+	    	
+	    }
+	    }
+
+	   
+		
+		
+	}
+	
+	
+	
 	
 	
 
@@ -221,6 +290,13 @@ public class Authentication {
 		System.out.println("==========================================");
 		
 	}
+	
+	private static String readFileAsString(String fileName)throws Exception
+	  {
+	    String data = "";
+	    data = new String(Files.readAllBytes(Paths.get(fileName)));
+	    return data;
+	  }
 
 }
 
